@@ -3,6 +3,7 @@ const fs = require('fs');
 
 //créer sauce
 exports.createSauce = (req, res, next) => {
+  console.log('debut create sauce')
    const sauceObject = JSON.parse(req.body.sauce);
    delete sauceObject._id;
    delete sauceObject._userId;
@@ -18,7 +19,9 @@ exports.createSauce = (req, res, next) => {
  
    sauce.save()
    .then(() => { res.status(201).json({message: 'Sauce enregistrée !'})})
-   .catch(error => { res.status(400).json( { error })})
+   .catch(error => {
+    console.log('catch du create sauce'+error);
+    res.status(400).json( { error })})
 };
 
 
@@ -85,7 +88,7 @@ exports.getOneSauce = (req, res, next) => {
 
 
 //Récupere toutes les sauces
-exports.getAllSauce = (req, res, next) => {
+exports.getAllSauces = (req, res, next) => {
   Sauce.find().then(
     (sauces) => {
       res.status(200).json(sauces);
